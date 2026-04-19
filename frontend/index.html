@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>National Accounts Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ░░ NAVBAR ░░ -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <span class="nav-icon">⬡</span>
+        <span class="nav-title">National Accounts <em>Dashboard</em></span>
+      </div>
+      <div class="nav-right">
+        <button class="dark-toggle" id="darkToggle" title="Toggle dark/light mode">◐</button>
+        <span class="nav-badge" id="dataSourceBadge">Live Data</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ░░ MAIN ░░ -->
+  <main class="container" id="mainContent">
+
+    <!-- ── Country selector ─────────────────────────── -->
+    <section class="controls-row">
+      <div class="control-group">
+        <label for="countrySelect">Exploring</label>
+        <div class="select-wrap">
+          <select id="countrySelect">
+            <optgroup label="Asia">
+              <option value="IND">🇮🇳 India</option>
+              <option value="CHN">🇨🇳 China</option>
+              <option value="JPN">🇯🇵 Japan</option>
+              <option value="KOR">🇰🇷 South Korea</option>
+              <option value="IDN">🇮🇩 Indonesia</option>
+              <option value="THA">🇹🇭 Thailand</option>
+              <option value="MYS">🇲🇾 Malaysia</option>
+              <option value="VNM">🇻🇳 Vietnam</option>
+              <option value="PAK">🇵🇰 Pakistan</option>
+              <option value="BGD">🇧🇩 Bangladesh</option>
+              <option value="IRN">🇮🇷 Iran</option>
+            </optgroup>
+            <optgroup label="Americas">
+              <option value="USA">🇺🇸 United States</option>
+              <option value="CAN">🇨🇦 Canada</option>
+              <option value="BRA">🇧🇷 Brazil</option>
+              <option value="MEX">🇲🇽 Mexico</option>
+              <option value="ARG">🇦🇷 Argentina</option>
+            </optgroup>
+            <optgroup label="Europe">
+              <option value="DEU">🇩🇪 Germany</option>
+              <option value="GBR">🇬🇧 United Kingdom</option>
+              <option value="FRA">🇫🇷 France</option>
+              <option value="NLD">🇳🇱 Netherlands</option>
+              <option value="CHE">🇨🇭 Switzerland</option>
+              <option value="SWE">🇸🇪 Sweden</option>
+              <option value="NOR">🇳🇴 Norway</option>
+              <option value="DNK">🇩🇰 Denmark</option>
+              <option value="FIN">🇫🇮 Finland</option>
+              <option value="POL">🇵🇱 Poland</option>
+              <option value="TUR">🇹🇷 Turkey</option>
+            </optgroup>
+            <optgroup label="Middle East & Africa">
+              <option value="SAU">🇸🇦 Saudi Arabia</option>
+              <option value="ARE">🇦🇪 UAE</option>
+              <option value="EGY">🇪🇬 Egypt</option>
+              <option value="NGA">🇳🇬 Nigeria</option>
+              <option value="ZAF">🇿🇦 South Africa</option>
+            </optgroup>
+            <optgroup label="Oceania">
+              <option value="AUS">🇦🇺 Australia</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+      <div class="country-headline">
+        <h1 id="countryHeadline">India</h1>
+        <span id="countryYear">2023 latest</span>
+      </div>
+    </section>
+
+    <!-- ── Summary cards ───────────────────────────── -->
+    <section class="cards-grid" id="cardsGrid">
+      <div class="stat-card" id="card-gdp">
+        <div class="card-icon">📈</div>
+        <div class="card-label">GDP Growth</div>
+        <div class="card-value" id="val-gdp"><span class="skeleton"></span></div>
+        <div class="card-unit">% annual</div>
+        <div class="card-trend" id="trend-gdp"></div>
+      </div>
+      <div class="stat-card" id="card-gdptotal">
+        <div class="card-icon">🏦</div>
+        <div class="card-label">GDP (Nominal)</div>
+        <div class="card-value" id="val-gdptotal"><span class="skeleton"></span></div>
+        <div class="card-unit">USD Trillion</div>
+        <div class="card-trend" id="trend-gdptotal"></div>
+      </div>
+      <div class="stat-card" id="card-inflation">
+        <div class="card-icon">💹</div>
+        <div class="card-label">Inflation Rate</div>
+        <div class="card-value" id="val-inflation"><span class="skeleton"></span></div>
+        <div class="card-unit">% CPI</div>
+        <div class="card-trend" id="trend-inflation"></div>
+      </div>
+      <div class="stat-card" id="card-unemployment">
+        <div class="card-icon">👥</div>
+        <div class="card-label">Unemployment</div>
+        <div class="card-value" id="val-unemployment"><span class="skeleton"></span></div>
+        <div class="card-unit">% of labour force</div>
+        <div class="card-trend" id="trend-unemployment"></div>
+      </div>
+      <div class="stat-card" id="card-percapita">
+        <div class="card-icon">💰</div>
+        <div class="card-label">Per Capita Income</div>
+        <div class="card-value" id="val-percapita"><span class="skeleton"></span></div>
+        <div class="card-unit">USD current</div>
+        <div class="card-trend" id="trend-percapita"></div>
+      </div>
+    </section>
+
+    <!-- ── Insights banner ─────────────────────────── -->
+    <section class="insights-banner" id="insightsBanner">
+      <div class="insight-label">💡 Insight</div>
+      <div class="insight-text" id="insightText">Loading insights…</div>
+    </section>
+
+    <!-- ── GDP SECTION ─────────────────────────────── -->
+    <section class="charts-section gdp-highlight-section">
+      <div class="section-header">
+        <h2>GDP Overview</h2>
+        <span class="section-sub">Nominal size &amp; growth rate 2014–2023</span>
+      </div>
+      <div class="charts-grid-2">
+        <div class="chart-card">
+          <div class="chart-title-row">
+            <span class="chart-title">Nominal GDP <span class="unit-tag">USD Trillion</span></span>
+            <button class="dl-btn" onclick="downloadChart('gdpTotalChart','GDP_Nominal')">⬇ PNG</button>
+          </div>
+          <div class="chart-wrap"><canvas id="gdpTotalChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title-row">
+            <span class="chart-title">GDP Growth Rate <span class="unit-tag">%</span></span>
+            <button class="dl-btn" onclick="downloadChart('gdpChart','GDP_Growth')">⬇ PNG</button>
+          </div>
+          <div class="chart-wrap"><canvas id="gdpChart"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Other time-series charts ────────────────── -->
+    <section class="charts-section">
+      <div class="section-header">
+        <h2>Other Indicators</h2>
+        <span class="section-sub">Historical trends 2014–2023</span>
+      </div>
+      <div class="charts-grid-2">
+        <div class="chart-card">
+          <div class="chart-title-row">
+            <span class="chart-title">Inflation Rate <span class="unit-tag">%</span></span>
+            <button class="dl-btn" onclick="downloadChart('inflationChart','Inflation')">⬇ PNG</button>
+          </div>
+          <div class="chart-wrap"><canvas id="inflationChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title-row">
+            <span class="chart-title">Unemployment Rate <span class="unit-tag">%</span></span>
+            <button class="dl-btn" onclick="downloadChart('unemploymentChart','Unemployment')">⬇ PNG</button>
+          </div>
+          <div class="chart-wrap"><canvas id="unemploymentChart"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title-row">
+            <span class="chart-title">GDP Per Capita <span class="unit-tag">USD</span></span>
+            <button class="dl-btn" onclick="downloadChart('percapitaChart','PerCapita')">⬇ PNG</button>
+          </div>
+          <div class="chart-wrap"><canvas id="percapitaChart"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Composition charts ──────────────────────── -->
+    <section class="charts-section">
+      <div class="section-header">
+        <h2>GDP Composition</h2>
+        <span class="section-sub">Structural breakdown</span>
+      </div>
+      <div class="charts-grid-pie">
+        <div class="chart-card pie-card">
+          <div class="chart-title-row">
+            <span class="chart-title">GDP Components <span class="unit-tag">C · I · G · NX</span></span>
+            <button class="dl-btn" onclick="downloadChart('gdpComponentsChart','GDP_Components')">⬇ PNG</button>
+          </div>
+          <div class="chart-wrap pie-wrap"><canvas id="gdpComponentsChart"></canvas></div>
+        </div>
+        <div class="chart-card pie-card">
+          <div class="chart-title-row">
+            <span class="chart-title">Sector Share <span class="unit-tag">Agri · Ind · Svcs</span></span>
+            <button class="dl-btn" onclick="downloadChart('sectorsChart','Sectors')">⬇ PNG</button>
+          </div>
+          <div class="chart-wrap pie-wrap"><canvas id="sectorsChart"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── COMPARISON SECTION ──────────────────────── -->
+    <section class="comparison-section" id="comparisonSection">
+      <div class="section-header">
+        <h2>Country Comparison</h2>
+        <span class="section-sub">Side-by-side macroeconomic analysis</span>
+      </div>
+
+      <div class="comparison-controls">
+        <div class="cmp-selector">
+          <label>Country A</label>
+          <div class="select-wrap accent-a">
+            <select id="cmpA"></select>
+          </div>
+        </div>
+        <div class="vs-badge">VS</div>
+        <div class="cmp-selector">
+          <label>Country B</label>
+          <div class="select-wrap accent-b">
+            <select id="cmpB"></select>
+          </div>
+        </div>
+        <button class="compare-btn" id="compareBtn">Compare ↗</button>
+      </div>
+
+      <div class="comparison-insight" id="cmpInsight" style="display:none"></div>
+
+      <div class="charts-grid-cmp" id="cmpChartsGrid">
+        <!-- Row 1: GDP total + GDP growth -->
+        <div class="chart-card cmp-chart">
+          <div class="chart-title-row">
+            <span class="chart-title">Nominal GDP <span class="unit-tag">USD Trillion</span></span>
+            <button class="dl-btn" onclick="downloadChart('cmpGdpTotalChart','CMP_GDP_Nominal')">⬇ PNG</button>
+          </div>
+          <div class="chart-wrap"><canvas id="cmpGdpTotalChart"></canvas></div>
+        </div>
+        <div class="chart-card cmp-chart">
+          <div class="chart-title-row">
+            <span class="chart-title">GDP Growth <span class="unit-tag">%</span></span>
+            <button class="dl-btn" onclick="downloadChart('cmpGdpChart','CMP_GDP_Growth')">⬇ PNG</button>
+          </div>
+          <div class="chart-wrap"><canvas id="cmpGdpChart"></canvas></div>
+        </div>
+        <!-- Row 2: Inflation + Unemployment -->
+        <div class="chart-card cmp-chart">
+          <div class="chart-title-row">
+            <span class="chart-title">Inflation <span class="unit-tag">%</span></span>
+            <button class="dl-btn" onclick="downloadChart('cmpInflationChart','CMP_Inflation')">⬇ PNG</button>
+          </div>
+          <div class="chart-wrap"><canvas id="cmpInflationChart"></canvas></div>
+        </div>
+        <div class="chart-card cmp-chart">
+          <div class="chart-title-row">
+            <span class="chart-title">Unemployment <span class="unit-tag">%</span></span>
+            <button class="dl-btn" onclick="downloadChart('cmpUnemploymentChart','CMP_Unemployment')">⬇ PNG</button>
+          </div>
+          <div class="chart-wrap"><canvas id="cmpUnemploymentChart"></canvas></div>
+        </div>
+        <!-- Row 3: Per capita full-width -->
+        <div class="chart-card cmp-chart span-full">
+          <div class="chart-title-row">
+            <span class="chart-title">GDP Per Capita <span class="unit-tag">USD</span></span>
+            <button class="dl-btn" onclick="downloadChart('cmpPercapitaChart','CMP_PerCapita')">⬇ PNG</button>
+          </div>
+          <div class="chart-wrap"><canvas id="cmpPercapitaChart"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ░░ LOADING OVERLAY ░░ -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner-ring"></div>
+    <div class="loading-copy">
+      <strong>Syncing economic pulse…</strong>
+      <p>Loading latest indicators</p>
+    </div>
+  </div>
+
+  <!-- ░░ TOAST ░░ -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // Show loading overlay immediately on page load
+    document.getElementById('loadingOverlay').classList.add('active');
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
