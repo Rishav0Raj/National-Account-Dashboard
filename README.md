@@ -1,6 +1,3 @@
-Here’s a **complete, professional README.md** for your *National Accounts Dashboard* project. You can copy this directly into GitHub.
-
----
 
 # 📊 National Accounts Dashboard
 
