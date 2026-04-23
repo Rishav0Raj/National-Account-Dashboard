@@ -200,28 +200,10 @@ This project focuses on **data visualization, user experience, and real-time ins
 
 ---
 
-## 📸 Screenshots
-
-*(Add your project screenshots here)*
-
----
-
-## 🎥 Demo Video
-
-*(Add YouTube link if available)*
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome!
 Feel free to fork the repository and submit pull requests.
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License.
 
 ---
 
@@ -233,8 +215,3 @@ This project is licensed under the MIT License.
 
 # ⭐ If you like this project, give it a star!
 
----
-
-If you want next:
-✅ I can optimize this for **top GitHub visibility (SEO README)**
-✅ Or create **perfect GitHub repo description + tags (very important)**
